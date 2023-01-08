@@ -1,20 +1,22 @@
+--!strict
+
 -- Simple Isometric Camera by Jacob Zufall.
 -- GNU General Public License v3.0
 
 --[Services]
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
+local Players: any = game:GetService("Players")
+local UserInputService: any = game:GetService("UserInputService")
+local RunService: any = game:GetService("RunService")
 
 --[Variables]
-local player = Players.LocalPlayer
-local camera = game.Workspace.CurrentCamera
+local player: any = Players.LocalPlayer
+local camera: any = game.Workspace.CurrentCamera
 
-local maxZoom = 50
-local minZoom = 25 
-local camDepth = 25 -- Essentially, what the zoom starts at.
-local heightOffset = 2 -- Don't change this, camera height should match player's head position.
-local fov = 20 -- You can tweak this, but it may result in some distortion. 20 gave me the desired result.
+local maxZoom: number = 50
+local minZoom: number = 25 
+local camDepth: number = 25 -- Essentially, what the zoom starts at.
+local heightOffset: number = 2 -- Don't change this, camera height should match player's head position.
+local fov: number = 20 -- You can tweak this, but it may result in some distortion. 20 gave me the desired result.
 
 
 --[Functions]
@@ -31,16 +33,16 @@ local function ZoomCam(direction) -- Zooms the camera inside the parameters defi
 end
 
 local function UpdateCam() -- This constantly runs (see below) so the camera stays at one position.
-	local character = player.Character
+	local character: any = player.Character
 
 	if character then
 
-		local rootPart = character:FindFirstChild("HumanoidRootPart")
+		local rootPart: Part = character:FindFirstChild("HumanoidRootPart")
 
 		if rootPart then
 
-			local rootPosition = rootPart.Position + Vector3.new(0, heightOffset, 0)
-			local camPosition = rootPosition + Vector3.new(camDepth, camDepth, camDepth)
+			local rootPosition: Vector3 = rootPart.Position + Vector3.new(0, heightOffset, 0)
+			local camPosition: Vector3 = rootPosition + Vector3.new(camDepth, camDepth, camDepth)
 
 			camera.CFrame = CFrame.lookAt(camPosition, rootPosition)
 			camera.FieldOfView = fov
